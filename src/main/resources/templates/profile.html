@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<!--//this is how the html page know's we're using Thymeleaf-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Profile</title>
+</head>
+<!--"partials" refers to the name of the file, the second, "navbar" is the name of the fragment -->
+<nav th:replace="partials/partials :: navbar"/>
+<body>
+
+<h1>This is your profile</h1>
+<p>Your username is: <span th:text="${username}"></span></p>
+<p>Your password is: <span th:text="${password}"></span></p>
+
+<!--&lt;!&ndash; Here we're using thyme leaf expression language... we're getting the value from the url path, setup in the controller&ndash;&gt;-->
+<!--<h3>Welcome <span th:text="${user}"></span></h3>-->
+
+<!--for each add inside of collection ads-->
+<div th:if="${isLoggedIn}">
+    <ul th:each="ad : ${ads}">
+        <li th:text="${ad}"></li>
+    </ul>
+</div>
+
+</body>
+<footer th:replace="partials/partials :: footer" />
+</html>

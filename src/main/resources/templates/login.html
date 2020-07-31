@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<!--//Directive, this is how the html page know's we're using Thymeleaf-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+</head>
+<body>
+
+<h1>This is the home page</h1>
+<!--    Here, Test is acting as a placeholder to check for styling without having to compile the whole app-->
+
+<h3>Please login</h3>
+<form action="/profile" method="post">
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username">
+
+    <label for="password">Password</label>
+    <input type="text" name="password" id="password">
+    <button>Submit</button>
+</form>
+
+
+</body>
+</html>
