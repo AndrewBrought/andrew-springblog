@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Roll Outcome</title>
+</head>
+<body>
+
+<h1>How did you do?</h1>
+<h3 th:text="${message}"></h3>
+<p>Your guess was: <span th:text="${n}"></span></p>
+<p>The roll is: <span th:text="${diceRoll}"></span></p>
+
+<a href="/roll-dice">Play again!</a>
+</body>
+</html>
