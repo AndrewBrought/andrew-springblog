@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Post</title>
+</head>
+<body>
+
+<form th:action="@{/posts/edit/{id}(id=${postToShow.id})}" method="post">
+    <input name="title" type="text" th:value="${postToShow.title}">
+    <input name="body" type="text" th:value="${postToShow.body}">
+    <input type="submit" value="Update">
+</form>
+<form th:action="@{/posts/delete/{id}(id=${postToShow.id})}" method="post">
+    <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>
