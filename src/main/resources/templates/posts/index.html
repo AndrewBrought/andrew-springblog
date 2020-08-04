@@ -5,8 +5,9 @@
     <title>Viewing All Posts</title>
 </head>
 <body>
+<!--singular of posts is 'post'-->
     <div th:each="post : ${posts}">
-        <h1 th:text="${post.title}"></h1>
+        <a th:href="@{/posts/{id}(id=${post.id})}"><h1 th:text="${post.title}"></h1></a>
         <p th:text="${post.body}"></p>
     </div>
 </body>

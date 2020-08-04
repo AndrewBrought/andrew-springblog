@@ -46,6 +46,127 @@ public class Ad {
     private String title;
     @Column(columnDefinition = "TEXT NOT NULL") // this will change the column definition to text
     private String description;
+}
+
+====== DATABASE AND TABLE INSTANTIATION (*Tables are built in model classes now)
+
+spring.datasource.url=jdbc:mysql://localhost/doglister_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+spring.datasource.username=doglister_user
+spring.datasource.password=letmein
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql
+
+CREATE USER 'doglister_user'@'localhost' IDENTIFIED BY 'letmein';
+GRANT ALL ON doglister_db.* TO doglister_user@localhost;
+
+DROP Table dogs;
+
+USE doglister_db;
+
+SHOW TABLES;
+DESCRIBE dogs;
+
+
+INSERT INTO dogs (age, name, reside_state)
+VALUES
+(2, 'Chuck', 'TX'),
+(5, 'Fred', 'OH'),
+(3, 'Bud', 'TN'),
+(10, 'Bailey', 'AL'),
+(11, 'Lexie', 'TX'),
+(1, 'Snickers', 'TX'),
+(6, 'Red', 'FL'),
+(8, 'Barney', 'CA'),
+(12, 'Bowser', 'TX');
+
+SELECT * FROM dogs;
+
+
+================  JPA NOTES CONT.D  08-04-20:  ==================
+
+** Setup Dev Tools for Spring Boot
+
+We need to create a repository (basically an interface) - we'll create a package called repositories
+Ex: DogRepository
+                                         expects 2 reference types:
+                                         Object in question and reference type of Primary Key for Dog(long id;                                            must be in wrapper form)
+public interface DogRepository extends JpaRepository<Dog, Long> {
+
+    // could be useful for a search bar
+    Dog findByName(String name);
+    Dog findFirstByOrderByTitleAsc();
+
+    //Can go further with @Query annotation to customize return Using JPOL /HQ:
+    @Query("from Dog a where a.id like ?1")
+    Dog getDogById(long dog);
+
+    //using a native query
+    @Query(nativeQuery = true, value = "SELECT title FROM dogs WHERE LENGTH "
+(title) < 10"
+}
+
+Create Controller:
+
+@Controller
+public class DogController {
+
+// dependency injection
+private final DogController dogsDao;
+private final PostController postDao;
+
+public DogController(DogRepository dogsDao, PostRepository postDao) {
+    this.dogsDao = dogsDao;
+    this.post.dao = postDao;
+}
+
+// Get single dog back ...will have to @override to string method in Dog class
+    @GetMapping("/dogs/{id}"
+    @ResponseBody
+    public String getDog(@PathVariable long id) {
+    return dogsDao.getOne(id).toString();
+    }
+
+
+    @GetMapping("/dogs")
+    @ResponseBody
+    public List<Dog> getDogs() {
+        return dogsDao.findAll();
+    }
+
+    // Should be a post method but haven't created a view to submit...RETURNS JSON
+   @GetMapping("/dogs/save")
+    @ResponseBody
+    public String save() {
+    //the save method works for both inserting and updating (depending on if the object has an id or not)
+    Dog dogToSave = new Dog();
+    dogToSave.setTitle("New Dog!");
+    dogToSave.setDescription("This is a new Dog!");
+    dogsDao.save(dogToSave)
+        dogs.Dao.save();
+        //This redirects to the "dogs" url where we view all dogs
+        return "redirect:/dogs";
+    }
+
+    //simple JSON Return
+    @GetMapping("/dogs")
+    @ResponseBody
+    public List<Dog> getdogs() {
+    return dogsDao.findAll();
+    }
+
+
+    //RETURNS TO VIEW (.html)
+    @GetMapping("dogs/view")
+    public String getDogsIndex(Model model) {
+        model.addAttribute("dogs", dogsDao.findAll());
+        return "dogs/index";
+    }
+
+    @GetMapping("/dogs/test")
+    @ResponseBody
+    public String getTestDogs() {
+    return dogs.Dao.findByTitle("Rover").toString();
+    }
 
 }
 

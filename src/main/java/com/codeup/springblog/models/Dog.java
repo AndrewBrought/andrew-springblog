@@ -3,8 +3,13 @@ package com.codeup.springblog.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "dogs")
+@Table(name = "dogs",
+        uniqueConstraints = { @UniqueConstraint( columnNames = { "name", "reside_state" } ) } )
 public class Dog {
+
+//    @Table( name = "MYTABLE",
+//            uniqueConstraints = { @UniqueConstraint( columnNames = { "NAME", "VERSION" } ) } )
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +21,7 @@ public class Dog {
     String name;
     @Column(columnDefinition = "char(2)")
     String reside_state = "XX";
+
 
 //    public Dog() {}
 
