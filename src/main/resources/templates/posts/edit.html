@@ -5,10 +5,12 @@
     <title>Edit Post</title>
 </head>
 <body>
-
+<!-- Important to include th:action for all mapping and links from now on to prevent cross site injection issues-->
 <form th:action="@{/posts/edit/{id}(id=${postToShow.id})}" method="post">
-    <input name="title" type="text" th:value="${postToShow.title}">
-    <input name="body" type="text" th:value="${postToShow.body}">
+    <label for="title">Title</label>
+    <input id="title" name="title" type="text" th:value="${postToShow.title}">
+    <label for="body">Body</label>
+    <input id="body" name="body" type="text" th:value="${postToShow.body}">
     <input type="submit" value="Update">
 </form>
 <form th:action="@{/posts/delete/{id}(id=${postToShow.id})}" method="post">
