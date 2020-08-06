@@ -14,12 +14,31 @@ public class Post {
     @Column(columnDefinition = "TEXT NOT NULL")
     private String body;
 
+    @ManyToOne
+    @JoinColumn (name = "user_id")
+    private User parentUser;
+
     public Post() {}
+
+    public Post(long id, String title, String body, User parentUser) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.parentUser = parentUser;
+    }
 
     public Post(long id, String title, String body) {
         this.id = id;
         this.title = title;
         this.body = body;
+    }
+
+    public User getParentUser() {
+        return parentUser;
+    }
+
+    public void setParentUser(User parentUser) {
+        this.parentUser = parentUser;
     }
 
     public String getTitle() {

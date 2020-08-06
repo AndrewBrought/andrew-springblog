@@ -170,4 +170,84 @@ public DogController(DogRepository dogsDao, PostRepository postDao) {
 
 }
 
+====== ONE TO MANY RELATIONSHIPS
+
+Ads and Comments (one to many)
+
+One Ad may have MANY comments
+
+One Ad may have ONE post
+
+ads
+@Id
+@GenerateValue(strategy = GenerationType.IDENTITY)
+   private long id;
+    title
+    description
+
+     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentAd")
+       private List<Comment> comments;
+     // (user_id)
+
+@Entity
+@Table(name = comments)
+public class comment {
+    @Id
+    @GenerateValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+   private String content;
+ @ManyToOne
+    @JoinColumn (name = "ad_id")
+    private Ad parentAd; // (FOREIGN KEY relates to ads id)
+
+    // (user_id)
+
+
+** Remember:
+One to many relationship, there should be a foreign key on the MANY side
+
+users
+    id <-
+    username
+    email
+    password
+
+posts
+    id
+    title
+    body
+    (Need) user_id FK - relates to the users table ^
+
+    Now We create a RELATIONSHIP Controller
+    @Controller
+    public class RelationshipController {
+
+    private final AdRepository adsDao;
+
+    public RelationshipController(AdRepository adsDao) {
+    this.adsDao = adsDao;
+    }
+
+    // view all ads and comments as JSON
+    @GetMapping("/rel/ads")
+    @ResponseBody
+    public List<Ad> returnAllAds() {
+           List<Ad> ads = adsDao.findAll();
+           // Showing how to dig into the relationship to pull info from another entity
+            String content = ads.get(0).getComments().get(0).getContent();
+            System.out.println(content);
+            return adsDao.findAll();
+    }
+
+    (Thymeleaf view)
+        @GetMApping("/rel/ads/view")
+        public String returnAdsView(Model model) {
+            model.addAttribute("ads", adsDao.findAll());
+            return "rel/ads";
+        }
+
+
+
+    }
 
