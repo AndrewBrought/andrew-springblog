@@ -79,15 +79,18 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
+
     public String create() {
-        return "Here is the form for creating a post";
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String insert() {
-        return "Post has been created!";
+//    @ResponseBody
+    public String insert(@RequestParam String title, @RequestParam String body) {
+        User user =  userDao.getOne(1L);
+        Post newPost = new Post(title, body, user);
+        postDao.save(newPost);
+        return ("redirect:/posts");
     }
 
 }

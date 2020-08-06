@@ -9,6 +9,7 @@
     <div th:each="post : ${posts}">
         <a th:href="@{/posts/{id}(id=${post.id})}"><h1 th:text="${post.title}"></h1></a>
         <p th:text="${post.body}"></p>
+        <p th:text="${post.parentUser.email}"></p>
     </div>
 </body>
 </html>
