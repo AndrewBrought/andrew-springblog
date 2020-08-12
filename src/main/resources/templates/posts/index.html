@@ -5,11 +5,13 @@
     <title>Viewing All Posts</title>
 </head>
 <body>
+<a class="btn btn-primary" href="/posts/create" role="button">Create Post</a>
 <!--singular of posts is 'post'-->
     <div th:each="post : ${posts}">
         <a th:href="@{/posts/{id}(id=${post.id})}"><h1 th:text="${post.title}"></h1></a>
         <p th:text="${post.body}"></p>
         <p th:text="${post.parentUser.email}"></p>
     </div>
+
 </body>
 </html>

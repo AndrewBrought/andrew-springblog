@@ -1,0 +1,38 @@
+Ad Controller:
+
+@GetMApping("/ads/create")
+public String showCreateForm(Model model) {
+// We have to send an ad object to our form in the view
+model.addAttribute("ad", new Ad());
+return "ads/create_ad";
+}
+
+What ever method we have that is like an edit form or create form, we need to make sure we send an empty
+reference object
+
+
+Create View
+                                      //Here we're telling our form that we're referencing this empty
+                                      ad object
+<form action="/ads/create" method="post" th:object="${ad}">
+Title:
+// These represent the properties of that object...called selection expressions
+<input th:field="*{title}" />
+Description:
+<input th:field="*{description}" />
+<br />
+<input type="submit" />
+</form>
+
+**Look up Thymeleaf form model binding for checkboxes
+
+Ad Controller: Post Mapping
+
+@PostMapping("/ads/create")
+// We have to ref. the ModAtt
+// Links up the form object to our controller so we can save it!
+public String create(@ModelAttribute Ad ad) {
+adsDao.save(ad);
+return "redirect:/ads/view";
+}
+
