@@ -7,7 +7,7 @@
 <body>
 <!--IS this necessary??-->
 <!--    <input type="hidden" name="id" th:value="${id}">-->
-    <a th:href="@{/posts/edit/{id}(id=${id})}"><h1 th:text="${title}"></h1></a>
+    <a th:href="@{/posts/{id}/edit(id=${id})}"><h1 th:text="${title}"></h1></a>
     <p th:text="${body}"></p>
     <h4 th:text="${email}"></h4>
 
